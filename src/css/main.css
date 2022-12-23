@@ -1,29 +1,139 @@
-/* normalize */
-@import url("https://necolas.github.io/normalize.css/latest/normalize.css");
-/* Noto Sans */
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
-
-:root {
+.container {
+    height: 100%;
+    --left-side: rgb(17, 14, 60);
+    --right-side: rgb(242, 251, 255);
 }
 
-* {
-    box-sizing: border-box;
-    font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-        "Segoe UI Symbol";
+.container:first-of-type {
+    grid-area: left;
+    display: grid;
+    grid-template: 1fr 1fr / minmax(350px, 1fr);
+    grid-template-areas:
+        "current"
+        "weatherMap";
+    background-color: var(--left-side);
+    color: var(--main-light);
 }
 
-p {
-    margin: 0;
+.container:last-of-type {
+    grid-area: right;
+    display: grid;
+    grid-template: 1fr 1fr / minmax(550px, 1fr);
+    grid-template-areas:
+        "forecast"
+        "details";
+    background-color: var(--right-side);
 }
 
-input {
-    outline: none;
-    border: 0;
+/* current */
+
+.current {
+    grid-area: current;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    --light-gray: rgb(163, 163, 180);
 }
 
-button {
-    border: 0;
+.current .top {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+}
+
+.current .top .city{
+    font-size: 1.5rem;
+}
+
+.current .temp {
+    font-size: 2rem;
+    vertical-align: text-top;
+    position: relative;
+    margin: 30px 0;
+}
+
+.current .temp .deg {
+    font-size: 6rem;
+    line-height: 5rem;
+}
+
+.current .temp .symbol {
+    position: absolute;
+    font-weight: lighter;
+    top: 0;
+}
+
+.current .bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+    color: var(--light-gray);
+}
+
+.current .bottom .sun {
+    display: flex;
+    column-gap: 20px;
+}
+
+.current .date {
+    color: var(--light-gray);
+}
+
+/* weatherMap */
+
+.weatherMap {
+    grid-area: weatherMap;
+    padding: 20px;
+}
+
+.weatherMap .map {
+    border: 5px solid white;
+    border-radius: 20px;
+    width: 100%;
+    min-height: 350px;
+}
+
+/* forecast */
+
+.forecast {
+    grid-area: forecast;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.forecast .title {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.forecast .daily {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 50px;
+}
+
+.forecast .daily .list {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    width: 100%;
+}
+
+.forecast .daily .item {
+    display: flex;
+    flex: 1;
+}
+
+.daily .weatherIcon > div {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
 }
 
 ul,
@@ -37,9 +147,54 @@ body {
     height: 100vh;
 }
 
-main {
-    height: 100%;
+.daily .item.tmp {
+    flex: 2;
     display: flex;
-    justify-content: center;
     align-items: center;
+    column-gap: 10px;
+}
+
+.daily .tmp .min {
+    flex: 0 1 45px;
+    text-align: right;
+}
+
+.daily .tmp .max {
+    flex: 0 1 45px;
+    text-align: right;
+}
+
+.daily .tmp .range {
+    flex: 1;
+    height: 2px;
+    background-color: black;
+}
+
+/* details */
+
+.details {
+    grid-area: details;
+    display: grid;
+    grid-template: repeat(2, 1fr) / repeat(3, minmax(160px, 1fr));
+    gap: 10px;
+    padding: 20px;
+}
+
+.details > div {
+    grid-area: span 1;
+    border: 5px solid black;
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.details > div :first-child {
+    margin-bottom: auto;
+}
+
+.details > div :last-child {
+    align-self: center;
+    margin-bottom: auto;
+    font-size: 1.8rem;
 }
