@@ -475,6 +475,10 @@ const countryList = (() => {
             alphaCode: "KP",
         },
         {
+            name: "korea",
+            alphaCode: "KP",
+        },
+        {
             name: "south korea",
             alphaCode: "KR",
         },
