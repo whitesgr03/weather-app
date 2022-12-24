@@ -1008,7 +1008,11 @@ const countryList = (() => {
         return matchObj.alphaCode;
     };
 
-    return { toCode, has };
+    const getAll = () => {
+        return COUNTRIES;
+    };
+
+    return { toCode, has, getAll };
 })();
 
 export { countryList };
