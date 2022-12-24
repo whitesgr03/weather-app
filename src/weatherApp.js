@@ -20,6 +20,8 @@ const createWeatherApp = () => {
             e.preventDefault();
             console.warn(`UNHANDLED PROMISE REJECTION: ${e.reason}`);
         });
+
+        main.setForecastDailyWeekName();
     };
 
     async function searchWeather(e) {
