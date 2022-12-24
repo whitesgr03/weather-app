@@ -1,6 +1,6 @@
 "use strict";
 
-import "./css/index.css";
+import "./css/style.css";
 
 import { weatherApi } from "./components/handleWeatherApi";
 import { countryList } from "./components/handleCountryData";
