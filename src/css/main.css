@@ -32,7 +32,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding: 20px;
     --light-gray: rgb(163, 163, 180);
 }
@@ -40,10 +40,6 @@
 .current .top {
     display: flex;
     align-items: center;
-    column-gap: 20px;
-}
-
-.current .top .city{
     font-size: 1.5rem;
 }
 
@@ -189,12 +185,65 @@ body {
     flex-direction: column;
 }
 
-.details > div :first-child {
+.details > div > div {
+    display: flex;
+    align-items: center;
     margin-bottom: auto;
 }
 
-.details > div :last-child {
-    align-self: center;
+.details > div > span {
+    display: flex;
+    justify-content: center;
     margin-bottom: auto;
     font-size: 1.8rem;
+}
+
+.details > div .icon {
+    width: 25px;
+    height: 25px;
+    background-size: contain;
+    margin-right: 5px;
+}
+
+.details .feels-like .icon {
+    background-image: url("../img/details/feels_like.png");
+}
+.details .wind .icon {
+    background-image: url("../img/details/wind.png");
+}
+.details .amount .icon.rain {
+    background-image: url("../img/details/rain.png");
+}
+.details .amount .icon.snow {
+    background-image: url("../img/details/snow.png");
+}
+.details .humidity .icon {
+    background-image: url("../img/details/humidity.png");
+}
+.details .visibility .icon {
+    background-image: url("../img//details/visibility.png");
+}
+.details .pressure .icon {
+    background-image: url("../img/details/pressure.png");
+}
+
+.details .wind .compass {
+    width: 35px;
+    height: 35px;
+    margin-right: 5px;
+    border: 2px solid black;
+    border-radius: 50%;
+    position: relative;
+}
+
+.details .wind .compass::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    transform: translate(-50%, -50%);
+    background-image: url("../img/details/compass.png");
+    background-repeat: no-repeat;
 }
