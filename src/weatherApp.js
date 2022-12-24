@@ -49,19 +49,23 @@ const createWeatherApp = () => {
             if (countryCode) query += `,${countryCode}`;
         }
 
-        let result = await weatherApi.getGeocoding(query);
+        const geocoding = await weatherApi.getGeocoding(query);
 
-        // console.log(result[0]);
+        if (geocoding.length === 0) throw Error("Try another search items");
 
-        if (result.length === 0) throw Error("Try another search items");
+        const [lat, lon] = [geocoding[0].lat, geocoding[0].lon];
 
-        const [lat, lon] = [result[0].lat, result[0].lon];
+        let CurrentWeather = await weatherApi.getCurrentWeather(
+            lat,
+            lon,
+            units
+        );
 
-        result = await weatherApi.getCurrentWeather(lat, lon, units);
-        console.log("CurrentWeather", result);
+        CurrentWeather.name = geocoding[0].name;
+        CurrentWeather.sys.country = geocoding[0].country;
 
-        result = await weatherApi.getWeatherForecast(lat, lon, units);
-        console.log("WeatherForecast", result);
+        main.createCurrentWeather(CurrentWeather);
+        main.createWeatherDetails(CurrentWeather);
     }
 
     return {
