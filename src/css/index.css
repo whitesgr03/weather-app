@@ -7,6 +7,7 @@
     --main-bgc: rgb(82, 131, 133);
     --main-dark: rgb(0, 0, 0);
     --main-light: rgb(255, 255, 255);
+    --header-bgc: rgb(222, 184, 135)
 }
 
 * {
@@ -27,6 +28,7 @@ input {
 
 button {
     border: 0;
+    outline: none;
 }
 
 ul,
