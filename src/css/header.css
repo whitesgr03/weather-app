@@ -36,7 +36,7 @@
     height: 36px;
     border-right: 0;
     position: relative;
-    background-color: burlywood;
+    background-color: var(--header-bgc);
 }
 
 .searchBtn:focus + .searchField {
