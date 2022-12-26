@@ -6,7 +6,9 @@ import { countryList } from "../components/handleCountryData";
 
 const main = (() => {
     const allCountry = countryList.getAll();
+    const weatherIcons = [];
 
+    importIconsInfo(require.context("../img/forecast", false, /\.(svg)$/));
     const createCurrentWeather = (data) => {
         const current = document.querySelector(".current");
 
@@ -160,22 +162,23 @@ const main = (() => {
         details.querySelector(".amount .value").textContent = amount;
     };
 
-    const setForecastDailyWeekName = () => {
-        const allWeek = document.querySelectorAll(".daily .week");
+    function importIconsInfo(resolve) {
+        const keys = resolve.keys();
 
-        let today = new Date();
+        for (let key of keys) {
+            const name = key.match(/[\w-]*(?=.svg)/g)[0];
 
-        for (let i = 0; i < allWeek.length; i++) {
-            if (i > 0) {
-                today = new Date(today.setDate(today.getDate() + 1));
-                const week = format(today, "EEEE");
-                allWeek[i].textContent = week;
-                continue;
-            }
 
-            allWeek[i].textContent = "Today";
+            const [main, icon = null] = name.split("-");
+            const url = resolve(key);
+
+            weatherIcons.push({
+                main,
+                icon,
+                url,
+            });
         }
-    };
+    }
 
     return {
         createCurrentWeather,
