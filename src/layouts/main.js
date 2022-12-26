@@ -257,8 +257,8 @@ const main = (() => {
 
     return {
         createCurrentWeather,
+        createWeatherForecast,
         createWeatherDetails,
-        setForecastDailyWeekName,
     };
 })();
 
