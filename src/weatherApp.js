@@ -32,7 +32,36 @@ const createWeatherApp = () => {
         showWeather("taipei, Taiwan");
     };
 
-    async function searchWeather(e) {
+    async function showWeather(query) {
+        const geocoding = await weatherApi.getGeocoding(query);
+
+        if (geocoding.length === 0) throw Error("Try another search items");
+
+        const [lat, lon] = [geocoding[0].lat, geocoding[0].lon];
+
+        let CurrentWeather = await weatherApi.getCurrentWeather(
+            lat,
+            lon,
+            units
+        );
+
+        CurrentWeather.name = geocoding[0].name;
+        CurrentWeather.sys.country = geocoding[0].country;
+
+        main.createCurrentWeather(CurrentWeather);
+        main.createWeatherDetails(CurrentWeather);
+
+        const WeatherForecast = await weatherApi.getWeatherForecast(
+            lat,
+            lon,
+            units
+        );
+
+        list.style.transform = 'translateX(0px)';
+        main.createWeatherForecast(WeatherForecast);
+    }
+
+    function searchWeather(e) {
         e.preventDefault();
 
         const searchField = this.querySelector(".searchField");
@@ -60,6 +89,8 @@ const createWeatherApp = () => {
 
             if (countryCode) query += `,${countryCode}`;
         }
+        showWeather(query);
+    }
 
         const geocoding = await weatherApi.getGeocoding(query);
 
