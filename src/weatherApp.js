@@ -3,7 +3,7 @@
 import "./css/style.css";
 
 import { weatherApi } from "./components/handleWeatherApi";
-
+import { countryList } from "./components/handleCountryData";
 import { main } from "./layouts/main";
 
 const createWeatherApp = () => {
