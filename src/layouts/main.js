@@ -1,7 +1,6 @@
 "use strict";
 
-import { format } from "date-fns";
-
+import { format, isToday } from "date-fns";
 import { countryList } from "../components/handleCountryData";
 
 const main = (() => {
@@ -61,6 +60,82 @@ const main = (() => {
             new Date(data.sys.sunset * 1000),
             "HH:mm"
         );
+    };
+
+    const createWeatherForecast = (data) => {
+        const daily = document.querySelector(".daily");
+
+        daily.innerHTML = "";
+
+        const template = `
+            <li class="card">
+                <div>
+                    <div class="dateTime"></div>
+                    <img/>
+                    <div>
+                        <span class="tmp"></span
+                        >&deg;
+                    </div>
+                </div>
+            </li>
+        `;
+
+        const day = {};
+        for (let i of data.list) {
+            const itemDate = new Date(i.dt * 1000);
+            const date = itemDate.getDate();
+
+            if (!day[date]) {
+                day[date] = date;
+                const div = document.createElement("div");
+                div.innerHTML = `
+                        <li class="date">
+                            <div class="week"></div>
+                            <div class="day"></div>
+                        </li >
+                    `;
+
+                const [w, d] = format(itemDate, "EEEE, MMMM d").split(",");
+
+                if (isToday(itemDate)) {
+                    div.querySelector(".week").textContent = "Today,";
+                    div.querySelector(".day").textContent = d;
+                } else {
+                    div.querySelector(".week").textContent = w + ",";
+                    div.querySelector(".day").textContent = d;
+                }
+                daily.append(div.firstElementChild);
+            }
+
+            const div = document.createElement("div");
+
+            div.innerHTML = template;
+
+            let icon = weatherIcons.find((item) => {
+                if (
+                    i.weather[0].main === item.main ||
+                    i.weather[0].icon === item.icon
+                ) {
+                    return item;
+                }
+            });
+
+            if (!icon)
+                icon = weatherIcons.find((item) => {
+                    item.main === "Mist";
+                });
+
+            div.querySelector("img").src = icon.url;
+            div.querySelector("img").alt = icon.description;
+
+            div.querySelector(".dateTime").textContent = format(
+                new Date(i.dt * 1000),
+                "h aaa"
+            );
+
+            div.querySelector(".tmp").textContent = Math.round(i.main.temp);
+            daily.append(div.firstElementChild);
+        }
     };
 
     const createWeatherDetails = (data) => {
