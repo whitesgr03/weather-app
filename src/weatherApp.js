@@ -26,7 +26,10 @@ const createWeatherApp = () => {
             console.warn(`UNHANDLED PROMISE REJECTION: ${e.reason}`);
         });
 
-        window.addEventListener("resize", changeSlides);
+        window.addEventListener("resize", setCarousel);
+
+        setCarousel();
+        showWeather("taipei, Taiwan");
     };
 
     async function searchWeather(e) {
@@ -75,6 +78,20 @@ const createWeatherApp = () => {
 
         main.createCurrentWeather(CurrentWeather);
         main.createWeatherDetails(CurrentWeather);
+
+    function setCarousel() {
+        const wrap = carousel.querySelector(".wrap");
+
+        wrap.style.maxWidth = "700px";
+        carouselItemCount = 4;
+
+        if (wrap.offsetWidth < 520) {
+            wrap.style.maxWidth = "340px";
+            carouselItemCount = 2;
+        } else if (wrap.offsetWidth < 700) {
+            wrap.style.maxWidth = "520px";
+            carouselItemCount = 3;
+        }
     }
 
     return {
