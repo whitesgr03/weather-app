@@ -92,23 +92,98 @@ const createWeatherApp = () => {
         showWeather(query);
     }
 
-        const geocoding = await weatherApi.getGeocoding(query);
+    function scrollCarousel(e) {
 
-        if (geocoding.length === 0) throw Error("Try another search items");
+        if (e.target.closest(".arrow")) {
+            scrollByClick(e)
+        }
 
-        const [lat, lon] = [geocoding[0].lat, geocoding[0].lon];
+        if (e.target.closest(".daily")) {
+            scrollByPointerMove(e);
+        }
+    }
 
-        let CurrentWeather = await weatherApi.getCurrentWeather(
-            lat,
-            lon,
-            units
-        );
+    function scrollByPointerMove(e) {
+        const items = list.querySelectorAll("li");
+        const itemWidth =
+            +getComputedStyle(items[0]) // The width of each li tag
+                .getPropertyValue("width")
+                .match(/\d+/)[0] + 20;
+        
+        list.addEventListener("dragstart", (e) => e.preventDefault());
 
-        CurrentWeather.name = geocoding[0].name;
-        CurrentWeather.sys.country = geocoding[0].country;
+        let shiftX = e.clientX - list.getBoundingClientRect().left;
 
-        main.createCurrentWeather(CurrentWeather);
-        main.createWeatherDetails(CurrentWeather);
+        document.addEventListener("pointermove", onPointerMove);
+        document.addEventListener("pointerup", onPointerUp);
+
+        function onPointerMove(e) {
+            list.setPointerCapture(e.pointerId);
+
+            let newLeft =
+                e.clientX - shiftX - wrap.getBoundingClientRect().left;
+
+            if (newLeft > 0) {
+                newLeft = 0;
+            }
+            let rightEdge = (items.length - carouselItemCount) * itemWidth;
+            if (newLeft < -rightEdge) {
+                newLeft = -rightEdge;
+            }
+
+            list.style.transform = `translateX(${newLeft}px)`;
+        }
+
+        function onPointerUp() {
+            document.removeEventListener("pointerup", onPointerUp);
+            document.removeEventListener("pointermove", onPointerMove);
+            list.removeEventListener("dragstart", (e) => e.preventDefault());
+        }
+    }
+
+    function scrollByClick(e) {
+        const arrowBtn = e.target.closest(".arrow");
+
+        if (arrowBtn.classList.contains("active")) {
+            return;
+        }
+
+        arrowBtn.classList.add("active");
+
+        list.addEventListener("transitionend", removeActive);
+
+        const items = list.querySelectorAll("li");
+        const itemWidth =
+            +getComputedStyle(items[0]) // The width of each li tag
+                .getPropertyValue("width")
+                .match(/\d+/)[0] + 20;
+        const direction = arrowBtn.classList[1];
+
+        let leftEdge =
+            list.getBoundingClientRect().left -
+            wrap.getBoundingClientRect().left;
+
+        switch (direction) {
+            case "prev":
+                leftEdge += itemWidth * 1;
+                leftEdge = Math.min(leftEdge, 0);
+                break;
+            case "next":
+                leftEdge -= itemWidth * 1;
+                leftEdge = Math.max(
+                    leftEdge,
+                    -itemWidth * (items.length - carouselItemCount)
+                );
+                break;
+        }
+
+        list.style.transform = `translateX(${leftEdge}px)`;
+
+        function removeActive() {
+            arrowBtn.classList.remove("active");
+            this.removeEventListener("transitionend", removeActive);
+        }
+    }
 
     function setCarousel() {
         const wrap = carousel.querySelector(".wrap");
