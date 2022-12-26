@@ -8,19 +8,25 @@ import { main } from "./layouts/main";
 
 const createWeatherApp = () => {
     let units = "metric"; // 設置切換按鈕 imperial
+    let carouselItemCount = null; // Number of items displayed per slide
 
     // catch DOM
     const searchForm = document.querySelector(".searchForm");
+    const carousel = document.querySelector(".carousel");
+    const wrap = carousel.querySelector(".wrap");
+    const list = wrap.querySelector(".daily");
 
     const init = async () => {
         searchForm.addEventListener("submit", searchWeather);
+        carousel.addEventListener("pointerdown", scrollCarousel);
+        carousel.addEventListener("selectstart", (e) => e.preventDefault());
 
         window.addEventListener("unhandledrejection", (e) => {
             e.preventDefault();
             console.warn(`UNHANDLED PROMISE REJECTION: ${e.reason}`);
         });
 
-        main.setForecastDailyWeekName();
+        window.addEventListener("resize", changeSlides);
     };
 
     async function searchWeather(e) {
