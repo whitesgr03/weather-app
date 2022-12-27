@@ -8,33 +8,40 @@ const main = (() => {
     const weatherIcons = [];
 
     importIconsInfo(require.context("../img/forecast", false, /\.(svg)$/));
+
     const createCurrentWeather = (data) => {
         const current = document.querySelector(".current");
 
         const template = `
             <div class="top">
-                <div class="city"></div>
-                <span class="country"></span>
+                <div class="name">
+                    <span class="city"></span>
+                    <span class="country"></span>
+                </div>
+                <div class="date"></div>
             </div>
             <div class="temp">
                 <span class="deg"></span>
                 <span class="symbol">&#8451;</span>
             </div>
             <div class="bottom">
-                <div class="date">
+                <div>
+                    <div class="icon"></div>
+                    <span class="status"></span>
                 </div>
                 <div class="sun">
                     <div>
-                        Sunrise: <span class="sunrise"></span>
+                        Sunrise <span class="sunrise"></span>
                     </div>
-                    <div>
-                        Sunset: <span class="sunset"></span>
-                    </div>
+                    <div>Sunset <span class="sunset"></span></div>
                 </div>
             </div>
+            <div class="updateTime"></div>
         `;
 
         current.innerHTML = template;
+
+        current.querySelector(".city").textContent = data.name;
 
         const country = allCountry.find(
             (item) => item.alphaCode === data.sys.country
@@ -46,12 +53,35 @@ const main = (() => {
             current.querySelector(".country").textContent = `, ${countryName}`;
         }
 
-        current.querySelector(".city").textContent = data.name;
-        current.querySelector(".deg").textContent = Math.round(data.main.temp);
         current.querySelector(".date").textContent = format(
             new Date(),
             "E, MMM d"
         );
+
+        current.querySelector(".deg").textContent = Math.round(data.main.temp);
+
+        let icon = weatherIcons.find((item) => {
+            if (
+                data.weather[0].main === item.main ||
+                data.weather[0].icon === item.icon
+            ) {
+                return item;
+            }
+        });
+
+        if (!icon)
+            icon = weatherIcons.find((item) => {
+                item.main === "Mist";
+            });
+
+
+        current.querySelector(
+            ".icon"
+        ).style.backgroundImage = `url(${icon.url})`;
+
+        current.querySelector(".status").textContent =
+            data.weather[0].description;
+
         current.querySelector(".sunrise").textContent = format(
             new Date(data.sys.sunrise * 1000),
             "HH:mm"
@@ -59,6 +89,11 @@ const main = (() => {
         current.querySelector(".sunset").textContent = format(
             new Date(data.sys.sunset * 1000),
             "HH:mm"
+        );
+
+        current.querySelector(".updateTime").textContent = format(
+            new Date(data.dt * 1000),
+            "'As of' hh:mm"
         );
     };
 
