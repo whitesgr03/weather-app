@@ -74,7 +74,6 @@ const main = (() => {
                 item.main === "Mist";
             });
 
-
         current.querySelector(
             ".icon"
         ).style.backgroundImage = `url(${icon.url})`;
@@ -277,7 +276,6 @@ const main = (() => {
 
         for (let key of keys) {
             const name = key.match(/[\w-]*(?=.svg)/g)[0];
-
 
             const [main, icon = null] = name.split("-");
             const url = resolve(key);
