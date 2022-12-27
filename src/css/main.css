@@ -32,14 +32,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     padding: 20px;
     --light-gray: rgb(163, 163, 180);
 }
 
 .current .top {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    row-gap: 20px;
+}
+
+.current .top .name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 1.5rem;
 }
 
@@ -65,8 +74,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    row-gap: 20px;
-    color: var(--light-gray);
+}
+
+.current .bottom > div:first-of-type {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.current .bottom .icon {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
 }
 
 .current .bottom .sun {
@@ -74,7 +93,9 @@
     column-gap: 20px;
 }
 
-.current .date {
+.current .updateTime {
+    width: 100%;
+    text-align: right;
     color: var(--light-gray);
 }
 
@@ -160,7 +181,6 @@
 .daily .date {
     width: 160px;
     text-align: center;
-    
 }
 
 .daily .date .week {
