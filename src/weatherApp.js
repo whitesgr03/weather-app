@@ -47,7 +47,6 @@ const createWeatherApp = () => {
 
         CurrentWeather.name = geocoding[0].name;
         CurrentWeather.sys.country = geocoding[0].country;
-
         main.createCurrentWeather(CurrentWeather);
         main.createWeatherDetails(CurrentWeather);
 
@@ -57,7 +56,7 @@ const createWeatherApp = () => {
             units
         );
 
-        list.style.transform = 'translateX(0px)';
+        list.style.transform = "translateX(0px)";
         main.createWeatherForecast(WeatherForecast);
     }
 
@@ -93,9 +92,8 @@ const createWeatherApp = () => {
     }
 
     function scrollCarousel(e) {
-
         if (e.target.closest(".arrow")) {
-            scrollByClick(e)
+            scrollByClick(e);
         }
 
         if (e.target.closest(".daily")) {
@@ -109,7 +107,7 @@ const createWeatherApp = () => {
             +getComputedStyle(items[0]) // The width of each li tag
                 .getPropertyValue("width")
                 .match(/\d+/)[0] + 20;
-        
+
         list.addEventListener("dragstart", (e) => e.preventDefault());
 
         let shiftX = e.clientX - list.getBoundingClientRect().left;
