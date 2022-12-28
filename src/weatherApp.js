@@ -16,49 +16,17 @@ const createWeatherApp = () => {
     const wrap = carousel.querySelector(".wrap");
     const list = wrap.querySelector(".daily");
 
-    const init = async () => {
+    const init = () => {
+        setCarouselDisplayItems();
+        showWeather("taipei, Taiwan");
+
         searchForm.addEventListener("submit", searchWeather);
+
         carousel.addEventListener("pointerdown", scrollCarousel);
         carousel.addEventListener("selectstart", (e) => e.preventDefault());
 
-        window.addEventListener("unhandledrejection", (e) => {
-            e.preventDefault();
-            console.warn(`UNHANDLED PROMISE REJECTION: ${e.reason}`);
-        });
-
-        window.addEventListener("resize", setCarousel);
-
-        setCarousel();
-        showWeather("taipei, Taiwan");
+        window.addEventListener("resize", setCarouselDisplayItems);
     };
-
-    async function showWeather(query) {
-        const geocoding = await weatherApi.getGeocoding(query);
-
-        if (geocoding.length === 0) throw Error("Try another search items");
-
-        const [lat, lon] = [geocoding[0].lat, geocoding[0].lon];
-
-        let CurrentWeather = await weatherApi.getCurrentWeather(
-            lat,
-            lon,
-            units
-        );
-
-        CurrentWeather.name = geocoding[0].name;
-        CurrentWeather.sys.country = geocoding[0].country;
-        main.createCurrentWeather(CurrentWeather);
-        main.createWeatherDetails(CurrentWeather);
-
-        const WeatherForecast = await weatherApi.getWeatherForecast(
-            lat,
-            lon,
-            units
-        );
-
-        list.style.transform = "translateX(0px)";
-        main.createWeatherForecast(WeatherForecast);
-    }
 
     function searchWeather(e) {
         e.preventDefault();
@@ -89,6 +57,38 @@ const createWeatherApp = () => {
             if (countryCode) query += `,${countryCode}`;
         }
         showWeather(query);
+    }
+
+    async function showWeather(query) {
+        const geocoding = await weatherApi.getGeocoding(query);
+
+        if (geocoding.length === 0) throw Error("Try another search items");
+
+        const [lat, lon] = [geocoding[0].lat, geocoding[0].lon];
+
+        const layers = weatherApi.getWeatherLayers();
+
+        main.createWeatherMap(geocoding[0], layers);
+
+        let CurrentWeather = await weatherApi.getCurrentWeather(
+            lat,
+            lon,
+            units
+        );
+
+        CurrentWeather.name = geocoding[0].name;
+        CurrentWeather.sys.country = geocoding[0].country;
+        main.createCurrentWeather(CurrentWeather);
+        main.createWeatherDetails(CurrentWeather);
+
+        const WeatherForecast = await weatherApi.getWeatherForecast(
+            lat,
+            lon,
+            units
+        );
+
+        list.style.transform = "translateX(0px)";
+        main.createWeatherForecast(WeatherForecast);
     }
 
     function scrollCarousel(e) {
