@@ -1,13 +1,15 @@
 "use strict";
 
+// library
 import { format, isToday } from "date-fns";
 import { countryList } from "../components/handleCountryData";
 
 const main = (() => {
     const allCountry = countryList.getAll();
     const weatherIcons = [];
+    let map = null;
 
-    importIconsInfo(require.context("../img/forecast", false, /\.(svg)$/));
+    importWeatherIcons(require.context("../img/forecast", false, /\.(svg)$/));
 
     const createCurrentWeather = (data) => {
         const current = document.querySelector(".current");
@@ -41,7 +43,9 @@ const main = (() => {
 
         current.innerHTML = template;
 
-        current.querySelector(".city").textContent = data.name;
+        current.querySelector(".city").textContent = `${data.name}, `;
+
+        const nameElemHeight = current.querySelector(".name").offsetHeight;
 
         const country = allCountry.find(
             (item) => item.alphaCode === data.sys.country
@@ -50,7 +54,11 @@ const main = (() => {
         if (country) {
             const countryName =
                 country["name"][0].toUpperCase() + country["name"].slice(1);
-            current.querySelector(".country").textContent = `, ${countryName}`;
+            current.querySelector(".country").textContent = `${countryName}`;
+        }
+
+        if (current.querySelector(".name").offsetHeight > nameElemHeight) {
+            current.querySelector(".country").style.fontSize = "1rem";
         }
 
         current.querySelector(".date").textContent = format(
@@ -60,26 +68,24 @@ const main = (() => {
 
         current.querySelector(".deg").textContent = Math.round(data.main.temp);
 
-        let icon = weatherIcons.find((item) => {
-            if (
+        let icon = weatherIcons.find(
+            (item) =>
                 data.weather[0].main === item.main ||
-                data.weather[0].icon === item.icon
-            ) {
-                return item;
-            }
-        });
+                data.weather[0].icon === item.main
+        );
 
-        if (!icon)
-            icon = weatherIcons.find((item) => {
-                item.main === "Mist";
-            });
+        if (!icon) icon = weatherIcons.find((item) => item.main === "Other");
 
         current.querySelector(
             ".icon"
         ).style.backgroundImage = `url(${icon.url})`;
 
-        current.querySelector(".status").textContent =
-            data.weather[0].description;
+        const description = data.weather[0].description
+            .split(" ")
+            .map((item) => item[0].toUpperCase() + item.slice(1))
+            .join(" ");
+
+        current.querySelector(".status").textContent = description;
 
         current.querySelector(".sunrise").textContent = format(
             new Date(data.sys.sunrise * 1000),
@@ -92,7 +98,7 @@ const main = (() => {
 
         current.querySelector(".updateTime").textContent = format(
             new Date(data.dt * 1000),
-            "'As of' hh:mm"
+            "'Last updated of' HH:mm"
         );
     };
 
@@ -101,19 +107,6 @@ const main = (() => {
 
         daily.innerHTML = "";
 
-        const template = `
-            <li class="card">
-                <div>
-                    <div class="dateTime"></div>
-                    <img/>
-                    <div>
-                        <span class="tmp"></span
-                        >&deg;
-                    </div>
-                </div>
-            </li>
-        `;
-
         const day = {};
         for (let i of data.list) {
             const itemDate = new Date(i.dt * 1000);
@@ -121,43 +114,38 @@ const main = (() => {
 
             if (!day[date]) {
                 day[date] = date;
-                const div = document.createElement("div");
-                div.innerHTML = `
-                        <li class="date">
-                            <div class="week"></div>
-                            <div class="day"></div>
-                        </li >
-                    `;
-
-                const [w, d] = format(itemDate, "EEEE, MMMM d").split(",");
-
-                if (isToday(itemDate)) {
-                    div.querySelector(".week").textContent = "Today,";
-                    div.querySelector(".day").textContent = d;
-                } else {
-                    div.querySelector(".week").textContent = w + ",";
-                    div.querySelector(".day").textContent = d;
-                }
-                daily.append(div.firstElementChild);
+                daily.append(createDateCard(itemDate));
             }
 
             const div = document.createElement("div");
 
+            const template = `
+                <li class="card">
+                    <div>
+                        <div class="dateTime"></div>
+                        <img/>
+                        <div>
+                            <span class="tmp"></span
+                            >&deg;
+                        </div>
+                    </div>
+                </li>
+            `;
+
             div.innerHTML = template;
 
-            let icon = weatherIcons.find((item) => {
-                if (
+            let icon = weatherIcons.find(
+                (item) =>
                     i.weather[0].main === item.main ||
-                    i.weather[0].icon === item.icon
-                ) {
-                    return item;
-                }
-            });
+                    i.weather[0].icon === item.main
+            );
 
             if (!icon)
-                icon = weatherIcons.find((item) => {
-                    item.main === "Mist";
-                });
+                icon = weatherIcons.find((item) => item.main === "Other");
+
+            if (i.pop > 0) {
+                div.firstElementChild.append(createPopCard(i.pop));
+            }
 
             div.querySelector("img").src = icon.url;
             div.querySelector("img").alt = icon.description;
@@ -234,7 +222,7 @@ const main = (() => {
         ).textContent = `${data.main.humidity} %`;
 
         details.querySelector(
-            ".pressure  .value"
+            ".pressure .value"
         ).textContent = `${data.main.pressure} hPa`;
 
         details.querySelector(
@@ -257,9 +245,11 @@ const main = (() => {
         let title = "rain";
 
         if (data.rain) {
-            amount = `${data.rain["1h"]} mm`;
+            const rain = data.rain["1h"] || data.rain["3h"];
+            amount = `${rain} mm`;
         } else if (data.snow) {
-            amount = `${data.snow["1h"]} mm`;
+            const snow = data.snow["1h"] || data.snow["3h"];
+            amount = `${snow} mm`;
             title = "snow";
         }
 
