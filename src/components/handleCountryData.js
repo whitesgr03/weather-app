@@ -939,7 +939,7 @@ const countryList = (() => {
             alphaCode: "AE",
         },
         {
-            name: "united kingdom of great britain and northern ireland",
+            name: "united kingdom",
             alphaCode: "GB",
         },
         {
@@ -1001,9 +1001,7 @@ const countryList = (() => {
     const toCode = (country) => {
         const matchObj = COUNTRIES.find((item) => item.name === country);
 
-        if (!matchObj) {
-            return false;
-        }
+        if (!matchObj) return false;
 
         return matchObj.alphaCode;
     };
