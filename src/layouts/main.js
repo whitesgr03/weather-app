@@ -261,7 +261,35 @@ const main = (() => {
         details.querySelector(".amount .value").textContent = amount;
     };
 
-    function importIconsInfo(resolve) {
+    const createWeatherMap = (data, overlayMaps) => {
+        const L = window.L;
+
+        if (map) {
+            map.off();
+            map.remove();
+        }
+
+        const osm = L.tileLayer(
+            "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+                attribution:
+                    '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>|<a href="https://openweathermap.org/"> OpenWeatherMap</a>',
+            }
+        );
+
+        map = L.map("map", {
+            center: [data.lat, data.lon], // 開啟時座標
+            zoom: 6,
+            minZoom: 1,
+            maxZoom: 18,
+            layers: [osm], //開啟時圖層
+        });
+
+        L.marker([data.lat, data.lon]).bindPopup(data.name).addTo(map);
+
+        L.control.layers(null, overlayMaps).addTo(map);
+    };
+
         const keys = resolve.keys();
 
         for (let key of keys) {
