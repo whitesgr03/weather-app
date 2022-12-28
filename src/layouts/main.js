@@ -288,6 +288,41 @@ const main = (() => {
         }
     }
 
+    function createDateCard(itemDate) {
+        const div = document.createElement("div");
+        div.innerHTML = `
+                        <li class="date">
+                            <div class="week"></div>
+                            <div class="day"></div>
+                        </li >
+                    `;
+
+        const [weeks, days] = format(itemDate, "EEEE, MMMM d").split(",");
+
+        if (isToday(itemDate)) {
+            div.querySelector(".week").textContent = "Today,";
+        } else {
+            div.querySelector(".week").textContent = weeks + ",";
+        }
+        div.querySelector(".day").textContent = days;
+        return div.firstElementChild;
+    }
+
+    function createPopCard(pop) {
+        const popCard = document.createElement("div");
+        const probability = Math.floor(pop * 100);
+
+        popCard.className = "precipitation";
+        popCard.innerHTML = `
+                <span class="probability"></span>
+                <div class="icon"></div>
+                `;
+
+        popCard.querySelector(".probability").textContent = `${probability}%`;
+
+        return popCard;
+    }
+
     return {
         createCurrentWeather,
         createWeatherForecast,
