@@ -163,11 +163,11 @@ const createWeatherApp = () => {
 
         switch (direction) {
             case "prev":
-                leftEdge += itemWidth * 1;
+                leftEdge += itemWidth * carouselItemCount;
                 leftEdge = Math.min(leftEdge, 0);
                 break;
             case "next":
-                leftEdge -= itemWidth * 1;
+                leftEdge -= itemWidth * carouselItemCount;
                 leftEdge = Math.max(
                     leftEdge,
                     -itemWidth * (items.length - carouselItemCount)
@@ -183,7 +183,7 @@ const createWeatherApp = () => {
         }
     }
 
-    function setCarousel() {
+    function setCarouselDisplayItems() {
         const wrap = carousel.querySelector(".wrap");
 
         wrap.style.maxWidth = "700px";
