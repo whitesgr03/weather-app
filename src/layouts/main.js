@@ -290,17 +290,15 @@ const main = (() => {
         L.control.layers(null, overlayMaps).addTo(map);
     };
 
+    function importWeatherIcons(resolve) {
         const keys = resolve.keys();
 
         for (let key of keys) {
-            const name = key.match(/[\w-]*(?=.svg)/g)[0];
-
-            const [main, icon = null] = name.split("-");
+            const main = key.match(/[\w-]*(?=.svg)/g)[0];
             const url = resolve(key);
 
             weatherIcons.push({
                 main,
-                icon,
                 url,
             });
         }
@@ -345,6 +343,7 @@ const main = (() => {
         createCurrentWeather,
         createWeatherForecast,
         createWeatherDetails,
+        createWeatherMap,
     };
 })();
 
