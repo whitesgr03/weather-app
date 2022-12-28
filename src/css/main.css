@@ -50,8 +50,12 @@
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
+    flex-wrap: wrap;
 }
 
+.current .top .name .city {
+    white-space: pre;
+}
 .current .temp {
     font-size: 2rem;
     vertical-align: text-top;
@@ -85,7 +89,7 @@
 .current .bottom .icon {
     width: 50px;
     height: 50px;
-    border: 1px solid black;
+    background-repeat: no-repeat;
 }
 
 .current .bottom .sun {
@@ -96,6 +100,8 @@
 .current .updateTime {
     width: 100%;
     text-align: right;
+    font-size: 0.8rem;
+    margin-top: 20px;
     color: var(--light-gray);
 }
 
@@ -136,6 +142,7 @@
     background-color: gainsboro;
     border-radius: 20px;
     column-gap: 20px;
+    position: relative;
 }
 
 .forecast .carousel .arrow {
@@ -159,6 +166,13 @@
     color: var(--main-light);
 }
 
+.forecast .carousel .tip{
+    font-size: .8rem;
+    position: absolute;
+    right: 5px;
+    bottom: 0;
+}
+
 .forecast .wrap {
     overflow: hidden;
     max-width: 700px;
@@ -172,7 +186,7 @@
     height: 100%;
     align-items: center;
     column-gap: 20px;
-    transition: transform 0.2s ease;
+    transition: transform 0.3s ease;
     position: absolute;
     left: 0;
     top: 0;
@@ -188,7 +202,11 @@
     line-height: 3rem;
 }
 
-.daily .card > div {
+.daily .card {
+    position: relative;
+}
+
+.daily .card > div:first-of-type {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -205,6 +223,21 @@
     margin: 10px 0 5px 0;
     width: 150px;
     height: auto;
+}
+
+.daily .card .precipitation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    display: flex;
+    align-items: center;
+}
+.daily .card .icon {
+    width: 25px;
+    height: 25px;
+    background-image: url("../img/umbrella.png");
 }
 
 /* details */
