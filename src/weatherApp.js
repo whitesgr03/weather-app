@@ -24,6 +24,8 @@ const createWeatherApp = () => {
 
         searchForm.addEventListener("submit", searchWeather);
 
+        temperatureScales.addEventListener("pointerdown", toggleTmpScales);
+
         carousel.addEventListener("pointerdown", scrollCarousel);
         carousel.addEventListener("selectstart", (e) => e.preventDefault());
 
@@ -198,6 +200,19 @@ const createWeatherApp = () => {
             wrap.style.maxWidth = "520px";
             carouselItemCount = 3;
         }
+    }
+
+    function toggleTmpScales() {
+        if (content.classList.length !== 1) return;
+
+        if (units === "metric") {
+            units = "imperial";
+        } else {
+            units = "metric";
+        }
+
+        temperatureScales.classList.toggle("imperial");
+        getGeocoding(searchItem);
     }
 
     return {
