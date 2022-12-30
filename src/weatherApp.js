@@ -64,10 +64,37 @@ const createWeatherApp = () => {
         showWeather(query);
     }
 
-    async function showWeather(query) {
+    async function getGeocoding(query) {
         const geocoding = await weatherApi.getGeocoding(query);
 
-        if (geocoding.length === 0) throw Error("Try another search items");
+        if (geocoding.length === 0) {
+            searchForm.classList.add("error");
+            searchForm.classList.add("shake");
+            searchForm.querySelector(".message").textContent =
+                "Try another search items";
+            return;
+        }
+
+        searchItem = query;
+        searchForm.classList.remove("error");
+
+        content.addEventListener("animationend", removeSlide);
+        content.classList.add("clear");
+        content.classList.add("loading");
+
+        function removeSlide(e) {
+            const name = e.animationName;
+            switch (name) {
+                case "slide-right":
+                    showWeather(geocoding[0]);
+                    break;
+                case "slide-left":
+                    content.className = "content";
+                    this.removeEventListener("animationend", removeSlide);
+                    break;
+            }
+        }
+    }
 
         const [lat, lon] = [geocoding[0].lat, geocoding[0].lon];
 
