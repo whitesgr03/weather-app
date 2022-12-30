@@ -41,13 +41,19 @@ const createWeatherApp = () => {
         if (searchField !== this.elements.search || !searchField.value.trim())
             return;
 
+        searchForm.addEventListener("animationend", removeShake);
+
         let [city, country] = searchField.value
             .toLowerCase()
             .split(",")
             .map((i) => i.trim());
 
         if (countryList.has(city)) {
-            throw Error("You need type 'city name' or 'city name, country'");
+            this.classList.add("error");
+            this.classList.add("shake");
+            this.querySelector(".message").textContent =
+                "You need type 'city name' or 'city name, country'";
+            return;
         }
 
         let query = city;
@@ -56,12 +62,22 @@ const createWeatherApp = () => {
             const countryCode = countryList.toCode(country);
 
             if (!countryCode) {
-                throw Error("Country is incorrect");
+                this.classList.add("error");
+                this.classList.add("shake");
+                this.querySelector(".message").textContent =
+                    "Country is incorrect";
+                return;
             }
 
             if (countryCode) query += `,${countryCode}`;
         }
-        showWeather(query);
+
+        getGeocoding(query);
+
+        function removeShake() {
+            this.classList.remove("shake");
+            this.removeEventListener("animationend", removeShake);
+        }
     }
 
     async function getGeocoding(query) {
