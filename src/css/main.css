@@ -2,6 +2,7 @@
     height: 100%;
     --left-side: rgb(17, 14, 60);
     --right-side: rgb(242, 251, 255);
+    position: relative;
 }
 
 .container:first-of-type {
@@ -24,6 +25,10 @@
         "details";
     background-color: var(--right-side);
 }
+
+
+
+
 
 /* current */
 
@@ -110,6 +115,7 @@
 .weatherMap {
     grid-area: weatherMap;
     padding: 20px;
+    z-index: 1;
 }
 
 .weatherMap .map {
@@ -126,6 +132,7 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
+    --main-forecast-bgc: rgb(220, 220, 220);
 }
 
 .forecast .title {
@@ -139,7 +146,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-    background-color: gainsboro;
+    background-color: var(--main-forecast-bgc);
     border-radius: 20px;
     column-gap: 20px;
     position: relative;
