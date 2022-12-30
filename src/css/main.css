@@ -166,11 +166,28 @@
     color: var(--main-light);
 }
 
-.forecast .carousel .tip{
-    font-size: .8rem;
+.forecast .carousel .tip {
+    font-size: 0.8rem;
     position: absolute;
     right: 5px;
-    bottom: 0;
+    bottom: 5px;
+}
+
+.forecast .carousel .tip::before {
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    right: 100%;
+    margin-right: 5px;
+    content: "!";
+    display: block;
+    width: 15px;
+    height: 15px;
+    background-color: var(--main-dark);
+    border: 1px solid var(--main-dark);
+    color: var(--main-light);
+    text-align: center;
+    border-radius: 100%;
 }
 
 .forecast .wrap {
