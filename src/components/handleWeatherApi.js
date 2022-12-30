@@ -67,7 +67,7 @@ const weatherApi = (() => {
 
     function handleError(error) {
         if (error.message === "Failed to fetch") {
-            console.warn(error.message);
+            alert(error.message);
         }
         console.log(error);
     }
