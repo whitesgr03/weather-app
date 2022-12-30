@@ -7,7 +7,8 @@
     --main-bgc: rgb(82, 131, 133);
     --main-dark: rgb(0, 0, 0);
     --main-light: rgb(255, 255, 255);
-    --header-bgc: rgb(222, 184, 135)
+    --header-bgc: rgb(255, 235, 205);
+    --header-btn: rgb(222, 184, 135);
 }
 
 * {
@@ -17,7 +18,8 @@
         "Segoe UI Symbol";
 }
 
-p, h2 {
+p,
+h2 {
     margin: 0;
 }
 
@@ -29,6 +31,8 @@ input {
 button {
     border: 0;
     outline: none;
+    padding: 0;
+    background-color: transparent;
 }
 
 ul,
@@ -43,7 +47,6 @@ body {
     padding: 40px;
     display: flex;
     flex-direction: column;
-
 }
 
 body > div {
@@ -55,10 +58,17 @@ header {
     height: auto;
     display: flex;
     align-items: center;
-    background-color: blanchedalmond;
-    padding: 20px;
+    background-color: var(--header-bgc);
+    padding: 30px 20px;
     width: 100%;
     min-width: 900px;
+    justify-content: space-between;
+}
+
+header div:first-of-type {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
 main {
