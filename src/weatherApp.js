@@ -112,11 +112,12 @@ const createWeatherApp = () => {
         }
     }
 
-        const [lat, lon] = [geocoding[0].lat, geocoding[0].lon];
+    async function showWeather(geocoding) {
+        const [lat, lon] = [geocoding.lat, geocoding.lon];
 
         const layers = weatherApi.getWeatherLayers();
 
-        main.createWeatherMap(geocoding[0], layers);
+        main.createWeatherMap(geocoding, layers);
 
         let CurrentWeather = await weatherApi.getCurrentWeather(
             lat,
@@ -124,10 +125,10 @@ const createWeatherApp = () => {
             units
         );
 
-        CurrentWeather.name = geocoding[0].name;
-        CurrentWeather.sys.country = geocoding[0].country;
-        main.createCurrentWeather(CurrentWeather);
-        main.createWeatherDetails(CurrentWeather);
+        CurrentWeather.name = geocoding.name;
+        CurrentWeather.sys.country = geocoding.country;
+        main.createCurrentWeather(CurrentWeather, units);
+        main.createWeatherDetails(CurrentWeather, units);
 
         const WeatherForecast = await weatherApi.getWeatherForecast(
             lat,
@@ -137,6 +138,9 @@ const createWeatherApp = () => {
 
         list.style.transform = "translateX(0px)";
         main.createWeatherForecast(WeatherForecast);
+
+        content.classList.add("done");
+        content.classList.remove("loading");
     }
 
     function scrollCarousel(e) {
