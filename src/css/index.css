@@ -77,4 +77,81 @@ main {
     display: grid;
     grid-template: 1fr / 1fr 2fr;
     grid-template-areas: "left right";
+    position: relative;
+}
+
+main::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120%;
+    right: 110%;
+    z-index: 1;
+    border-right: 5px solid var(--main-light);
+    background: var(--main-dark);
+}
+
+main::before {
+    content: "Loading...";
+    position: absolute;
+    color: var(--main-light);
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0s ease 0.25s;
+}
+
+main.loading::before {
+    opacity: 1;
+    visibility: visible;
+    transition: all 0s ease 1s;
+}
+
+main.clear::after {
+    animation: slide-right 1.5s ease-in-out both;
+}
+
+main.done::after {
+    animation: slide-left 1s ease-in both;
+}
+
+@keyframes slide-right {
+    0% {
+        transform: skewX(0deg) translateX(0%);
+    }
+
+    25% {
+        transform: skewX(-5deg) translateX(45%);
+    }
+
+    30% {
+        transform: skewX(-5deg) translateX(45%);
+    }
+
+    50% {
+        transform: skewX(10deg) translateX(30%);
+    }
+
+    75%,
+    100% {
+        transform: skewX(10deg) translateX(100%);
+    }
+}
+
+@keyframes slide-left {
+    0% {
+        transform: skewX(0deg) translateX(100%);
+    }
+
+    50% {
+        transform: skewX(5deg) translateX(0%);
+    }
+
+    100% {
+        transform: skewX(5deg) translateX(0%);
+    }
 }
