@@ -11,7 +11,7 @@ const main = (() => {
 
     importWeatherIcons(require.context("../img/forecast", false, /\.(svg)$/));
 
-    const createCurrentWeather = (data) => {
+    const createCurrentWeather = (data, units) => {
         const current = document.querySelector(".current");
 
         const template = `
@@ -24,7 +24,7 @@ const main = (() => {
             </div>
             <div class="temp">
                 <span class="deg"></span>
-                <span class="symbol">&#8451;</span>
+                <span class="symbol"></span>
             </div>
             <div class="bottom">
                 <div>
@@ -67,6 +67,17 @@ const main = (() => {
         );
 
         current.querySelector(".deg").textContent = Math.round(data.main.temp);
+
+        let symbol = null;
+        switch (units) {
+            case "metric":
+                symbol = "&#8451;";
+                break;
+            case "imperial":
+                symbol = "&#8457;";
+                break;
+        }
+        current.querySelector(".symbol").innerHTML = symbol;
 
         let icon = weatherIcons.find(
             (item) =>
@@ -160,7 +171,7 @@ const main = (() => {
         }
     };
 
-    const createWeatherDetails = (data) => {
+    const createWeatherDetails = (data, units) => {
         const details = document.querySelector(".details");
 
         const template = `
@@ -225,9 +236,17 @@ const main = (() => {
             ".pressure .value"
         ).textContent = `${data.main.pressure} hPa`;
 
-        details.querySelector(
-            ".wind .value"
-        ).textContent = `${data.wind.speed} m/s`;
+        let wind = null;
+        switch (units) {
+            case "metric":
+                wind = `${data.wind.speed} m/s`;
+                break;
+            case "imperial":
+                wind = `${data.wind.speed} mph`;
+                break;
+        }
+
+        details.querySelector(".wind .value").textContent = wind;
 
         details.querySelector(
             ".wind .compass"
