@@ -57,5 +57,46 @@
 }
 
 .searchBtn:active::before {
-    transform: scale(0.9);
+.temperatureScales {
+    padding: 5px 10px;
+    background-color: var(--main-light);
+    border-radius: 10px;
+    min-width: 320px;
+    border: 5px solid var(--main-dark);
+}
+
+.temperatureScales > div {
+    position: relative;
+    display: flex;
+    column-gap: 20px;
+}
+
+.temperatureScales .slider {
+    flex: 0 1 calc(50% - 5px );
+    background-color: var(--header-btn);
+    padding: 15px 0;
+    opacity: .8;
+    border-radius: 20px;
+    transition: transform .3s ease;
+}
+
+.temperatureScales.imperial .slider {
+    transform: translateX(calc(100% + 10px));
+}
+
+.temperatureScales .wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 10px;
+}
+
+.temperatureScales button {
+    width: 100%;
+    color: var(--main-dark);
+    cursor: pointer;
 }
