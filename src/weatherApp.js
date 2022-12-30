@@ -12,6 +12,7 @@ const createWeatherApp = () => {
     let carouselItemCount = null; // Number of items displayed per slide
 
     // catch DOM
+    const temperatureScales = document.querySelector(".temperatureScales");
     const searchForm = document.querySelector(".searchForm");
     const carousel = document.querySelector(".carousel");
     const wrap = carousel.querySelector(".wrap");
