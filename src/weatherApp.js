@@ -21,7 +21,7 @@ const createWeatherApp = () => {
 
     const init = () => {
         setCarouselDisplayItems();
-        showWeather("taipei, Taiwan");
+        getGeocoding("taipei, Taiwan");
 
         searchForm.addEventListener("submit", searchWeather);
 
