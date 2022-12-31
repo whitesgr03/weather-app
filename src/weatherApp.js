@@ -20,6 +20,7 @@ const createWeatherApp = () => {
     const list = wrap.querySelector(".daily");
 
     const init = () => {
+        content.classList.add("init");
         setCarouselDisplayItems();
         getGeocoding("taipei, Taiwan");
 
