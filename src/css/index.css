@@ -155,3 +155,7 @@ main.done::after {
         transform: skewX(5deg) translateX(0%);
     }
 }
+
+main.init::after {
+    animation-duration: 0s;
+}
