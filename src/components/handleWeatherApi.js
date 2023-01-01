@@ -1,5 +1,7 @@
 "use strict";
 
+import L from "leaflet";
+
 const weatherApi = (() => {
     const DOMAIN = "api.openweathermap.org";
     const FREE_OPENWEATHER_API_KEY = "ee7edaa11b365485de77f73f7bc105b2";
