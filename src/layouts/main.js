@@ -1,6 +1,10 @@
 "use strict";
 
 // library
+import L from "leaflet";
+import icon from "leaflet/dist/images/marker-icon.png";
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
+
 import { format, isToday } from "date-fns";
 import { countryList } from "../components/handleCountryData";
 
@@ -281,8 +285,6 @@ const main = (() => {
     };
 
     const createWeatherMap = (data, overlayMaps) => {
-        const L = window.L;
-
         if (map) {
             map.off();
             map.remove();
@@ -304,7 +306,19 @@ const main = (() => {
             layers: [osm], //開啟時圖層
         });
 
-        L.marker([data.lat, data.lon]).bindPopup(data.name).addTo(map);
+        let DefaultIcon = L.icon({
+            iconUrl: icon,
+            shadowUrl: iconShadow,
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            tooltipAnchor: [16, -28],
+            shadowSize: [41, 41],
+        });
+
+        L.marker([data.lat, data.lon], { icon: DefaultIcon })
+            .bindPopup(data.name)
+            .addTo(map);
 
         L.control.layers(null, overlayMaps).addTo(map);
     };
