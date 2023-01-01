@@ -29,7 +29,6 @@ const weatherApi = (() => {
     };
 
     const getWeatherLayers = () => {
-        const L = window.L;
 
         const overlayMaps = {};
 
