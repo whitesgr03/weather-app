@@ -14,7 +14,7 @@ const weatherApi = (() => {
     };
 
     const getGeocoding = async (query) => {
-        const url = `http://${DOMAIN}/geo/1.0/direct?q=${query}&appid=${FREE_OPENWEATHER_API_KEY}`;
+        const url = `https://${DOMAIN}/geo/1.0/direct?q=${query}&appid=${FREE_OPENWEATHER_API_KEY}`;
         return await fetchDate(url);
     };
 
