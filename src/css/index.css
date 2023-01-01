@@ -119,6 +119,10 @@ main.done::after {
     animation: slide-left 1s ease-in both;
 }
 
+main.init::after {
+    animation-duration: 0s;
+}
+
 @keyframes slide-right {
     0% {
         transform: skewX(0deg) translateX(0%);
@@ -154,8 +158,4 @@ main.done::after {
     100% {
         transform: skewX(5deg) translateX(0%);
     }
-}
-
-main.init::after {
-    animation-duration: 0s;
 }
