@@ -891,7 +891,7 @@ const main = (() => {
     const nameElemHeight = current.querySelector(".name").offsetHeight;
     const country = allCountry.find(item => item.alphaCode === data.sys.country);
     if (country) {
-      const countryName = country["name"][0].toUpperCase() + country["name"].slice(1);
+      const countryName = country["name"].replace(/\b\w/g, word => word.toUpperCase());
       current.querySelector(".country").textContent = `${countryName}`;
     }
     if (current.querySelector(".name").offsetHeight > nameElemHeight) {
@@ -912,7 +912,7 @@ const main = (() => {
     let icon = weatherIcons.find(item => data.weather[0].main === item.main || data.weather[0].icon === item.main);
     if (!icon) icon = weatherIcons.find(item => item.main === "Other");
     current.querySelector(".icon").style.backgroundImage = `url(${icon.url})`;
-    const description = data.weather[0].description.split(" ").map(item => item[0].toUpperCase() + item.slice(1)).join(" ");
+    const description = data.weather[0].description.replace(/\b\w/g, word => word.toUpperCase());
     current.querySelector(".status").textContent = description;
     current.querySelector(".sunrise").textContent = (0,format/* default */.Z)(new Date(data.sys.sunrise * 1000), "HH:mm");
     current.querySelector(".sunset").textContent = (0,format/* default */.Z)(new Date(data.sys.sunset * 1000), "HH:mm");
@@ -1035,7 +1035,7 @@ const main = (() => {
       title = "snow";
     }
     details.querySelector(".amount .icon").classList.add(title);
-    details.querySelector(".amount .title").textContent = `${title[0].toUpperCase() + title.slice(1)} Amount`;
+    details.querySelector(".amount .title").textContent = `${title.replace(/\b\w/g, word => word.toUpperCase())} Amount`;
     details.querySelector(".amount .value").textContent = amount;
   };
   const createWeatherMap = (data, overlayMaps) => {
