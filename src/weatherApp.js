@@ -7,7 +7,7 @@ import { countryList } from "./components/handleCountryData";
 import { main } from "./layouts/main";
 
 const createWeatherApp = () => {
-    let units = "metric"; // 設置切換按鈕 imperial
+    let units = "metric";
     let searchItem = null;
     let carouselItemCount = null; // Number of items displayed per slide
 

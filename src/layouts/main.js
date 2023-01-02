@@ -302,11 +302,11 @@ const main = (() => {
         );
 
         map = L.map("map", {
-            center: [data.lat, data.lon], // 開啟時座標
+            center: [data.lat, data.lon],
             zoom: 6,
             minZoom: 1,
             maxZoom: 18,
-            layers: [osm], //開啟時圖層
+            layers: [osm],
         });
 
         let DefaultIcon = L.icon({
