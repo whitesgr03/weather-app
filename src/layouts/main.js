@@ -56,8 +56,10 @@ const main = (() => {
         );
 
         if (country) {
-            const countryName =
-                country["name"][0].toUpperCase() + country["name"].slice(1);
+            const countryName = country["name"].replace(/\b\w/g, (word) =>
+                word.toUpperCase()
+            );
+
             current.querySelector(".country").textContent = `${countryName}`;
         }
 
@@ -95,10 +97,10 @@ const main = (() => {
             ".icon"
         ).style.backgroundImage = `url(${icon.url})`;
 
-        const description = data.weather[0].description
-            .split(" ")
-            .map((item) => item[0].toUpperCase() + item.slice(1))
-            .join(" ");
+        const description = data.weather[0].description.replace(
+            /\b\w/g,
+            (word) => word.toUpperCase()
+        );
 
         current.querySelector(".status").textContent = description;
 
@@ -278,9 +280,10 @@ const main = (() => {
 
         details.querySelector(".amount .icon").classList.add(title);
 
-        details.querySelector(".amount .title").textContent = `${
-            title[0].toUpperCase() + title.slice(1)
-        } Amount`;
+        details.querySelector(".amount .title").textContent = `${title.replace(
+            /\b\w/g,
+            (word) => word.toUpperCase()
+        )} Amount`;
         details.querySelector(".amount .value").textContent = amount;
     };
 
