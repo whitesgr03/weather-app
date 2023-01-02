@@ -28,6 +28,15 @@ input {
     border: 0;
 }
 
+a {
+    text-decoration: none;
+    color: var(--main-dark);
+}
+
+a:link{
+    color: var(--main-dark);
+}
+
 button {
     border: 0;
     outline: none;
@@ -47,6 +56,7 @@ body {
     padding: 40px;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 body > div {
@@ -158,4 +168,30 @@ main.init::after {
     100% {
         transform: skewX(5deg) translateX(0%);
     }
+}
+
+.attribution {
+    position: absolute;
+    right: 10px;
+    bottom: 0;
+    font-size: small;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+a{
+    vertical-align: middle;
+}
+
+footer img {
+    width: 20px;
+    height: auto;
 }
