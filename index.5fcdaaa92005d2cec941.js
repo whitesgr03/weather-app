@@ -1048,13 +1048,11 @@ const main = (() => {
     });
     map = leaflet_src_default().map("map", {
       center: [data.lat, data.lon],
-      // 開啟時座標
       zoom: 6,
       minZoom: 1,
       maxZoom: 18,
-      layers: [osm] //開啟時圖層
+      layers: [osm]
     });
-
     let DefaultIcon = leaflet_src_default().icon({
       iconUrl: marker_icon,
       shadowUrl: marker_shadow,
@@ -1124,7 +1122,7 @@ const main = (() => {
 
 
 const createWeatherApp = () => {
-  let units = "metric"; // 設置切換按鈕 imperial
+  let units = "metric";
   let searchItem = null;
   let carouselItemCount = null; // Number of items displayed per slide
 
