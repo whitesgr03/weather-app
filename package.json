@@ -11,6 +11,9 @@
         "predeploy": "npm run build",
         "deploy": "gh-pages -d dist"
     },
+    "repository": {
+        "url": "git+https://github.com/whitesgr03/weather-app.git"
+    },
     "author": "",
     "license": "ISC",
     "devDependencies": {
