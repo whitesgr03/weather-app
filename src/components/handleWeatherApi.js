@@ -66,13 +66,6 @@ const weatherApi = (() => {
         });
     }
 
-    function handleError(error) {
-        if (error.message === "Failed to fetch") {
-            alert(error.message);
-        }
-        console.log(error);
-    }
-
     return {
         getGeocoding,
         getCurrentWeather,
