@@ -1,5 +1,6 @@
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
+const path = require("path");
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
@@ -23,7 +24,15 @@ module.exports = merge(common, {
             },
         ],
     },
-    plugins: [new MiniCssExtractPlugin(), new BundleAnalyzerPlugin()],
+    plugins: [
+        new MiniCssExtractPlugin(),
+        new BundleAnalyzerPlugin({
+            analyzerMode: "disabled",
+            openAnalyzer: false,
+            generateStatsFile: true,
+            statsFilename: path.resolve(__dirname, "stats.json"),
+        }),
+    ],
 
     optimization: {
         minimizer: [new CssMinimizerPlugin()],
