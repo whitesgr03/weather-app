@@ -1,6 +1,6 @@
 "use strict";
 
-import L from "leaflet";
+import L from "leaflet/dist/leaflet";
 
 const weatherApi = (() => {
     const DOMAIN = "api.openweathermap.org";

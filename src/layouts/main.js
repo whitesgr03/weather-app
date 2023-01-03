@@ -1,7 +1,7 @@
 "use strict";
 
 // library
-import L from "leaflet";
+import L from "leaflet/dist/leaflet";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 
