@@ -1,13 +1,16 @@
-(self["webpackChunky"] = self["webpackChunky"] || []).push([[826],{
+(self["webpackChunkweather_app"] = self["webpackChunkweather_app"] || []).push([[826],{
 
-/***/ 565:
+/***/ 312:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
 
-// EXTERNAL MODULE: ./node_modules/leaflet/dist/leaflet-src.js
-var leaflet_src = __webpack_require__(243);
-var leaflet_src_default = /*#__PURE__*/__webpack_require__.n(leaflet_src);
+;// CONCATENATED MODULE: ./src/css/style.css
+// extracted by mini-css-extract-plugin
+
+// EXTERNAL MODULE: ./node_modules/leaflet/dist/leaflet.js
+var leaflet = __webpack_require__(531);
+var leaflet_default = /*#__PURE__*/__webpack_require__.n(leaflet);
 ;// CONCATENATED MODULE: ./src/components/handleWeatherApi.js
 
 
@@ -37,7 +40,7 @@ const weatherApi = (() => {
   const getWeatherLayers = () => {
     const overlayMaps = {};
     for (let i in LAYERS) {
-      overlayMaps[LAYERS[i]] = leaflet_src_default().tileLayer(`https://tile.openweathermap.org/map/${i}/{z}/{x}/{y}.png?appid=${FREE_OPENWEATHER_API_KEY}`);
+      overlayMaps[LAYERS[i]] = leaflet_default().tileLayer(`https://tile.openweathermap.org/map/${i}/{z}/{x}/{y}.png?appid=${FREE_OPENWEATHER_API_KEY}`);
     }
     return overlayMaps;
   };
@@ -1043,17 +1046,17 @@ const main = (() => {
       map.off();
       map.remove();
     }
-    const osm = leaflet_src_default().tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    const osm = leaflet_default().tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>|<a href="https://openweathermap.org/"> OpenWeatherMap</a>'
     });
-    map = leaflet_src_default().map("map", {
+    map = leaflet_default().map("map", {
       center: [data.lat, data.lon],
       zoom: 6,
       minZoom: 1,
       maxZoom: 18,
       layers: [osm]
     });
-    let DefaultIcon = leaflet_src_default().icon({
+    let DefaultIcon = leaflet_default().icon({
       iconUrl: marker_icon,
       shadowUrl: marker_shadow,
       iconSize: [25, 41],
@@ -1062,10 +1065,10 @@ const main = (() => {
       tooltipAnchor: [16, -28],
       shadowSize: [41, 41]
     });
-    leaflet_src_default().marker([data.lat, data.lon], {
+    leaflet_default().marker([data.lat, data.lon], {
       icon: DefaultIcon
     }).bindPopup(data.name).addTo(map);
-    leaflet_src_default().control.layers(null, overlayMaps).addTo(map);
+    leaflet_default().control.layers(null, overlayMaps).addTo(map);
   };
   function importWeatherIcons(resolve) {
     const keys = resolve.keys();
@@ -1422,7 +1425,8 @@ module.exports = __webpack_require__.p + "img/d554b2b13d48a709d41b.svg";
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ __webpack_require__.O(0, [216], () => (__webpack_exec__(565)));
+/******/ __webpack_require__.O(0, [216], () => (__webpack_exec__(312)));
 /******/ var __webpack_exports__ = __webpack_require__.O();
 /******/ }
 ]);
+//# sourceMappingURL=index.989810417d82b7d15141.js.map
