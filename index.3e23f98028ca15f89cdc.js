@@ -1,6 +1,6 @@
 (self["webpackChunkweather_app"] = self["webpackChunkweather_app"] || []).push([[826],{
 
-/***/ 312:
+/***/ 73:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -8,10 +8,26 @@
 ;// CONCATENATED MODULE: ./src/css/style.css
 // extracted by mini-css-extract-plugin
 
+;// CONCATENATED MODULE: ./src/components/handleError.js
+
+
+const handleError = (() => {
+  const api = error => {
+    if (error.message === "Failed to fetch") {
+      alert(error.message);
+    }
+    console.log(error);
+  };
+  return {
+    api
+  };
+})();
+
 // EXTERNAL MODULE: ./node_modules/leaflet/dist/leaflet.js
 var leaflet = __webpack_require__(531);
 var leaflet_default = /*#__PURE__*/__webpack_require__.n(leaflet);
 ;// CONCATENATED MODULE: ./src/components/handleWeatherApi.js
+
 
 
 
@@ -52,7 +68,7 @@ const weatherApi = (() => {
       }
       return response.json();
     } catch (error) {
-      handleError(error);
+      handleError.api(error);
     }
   }
   function timeoutPromise(time) {
@@ -61,12 +77,6 @@ const weatherApi = (() => {
         reject(new Error("timeout"));
       }, time);
     });
-  }
-  function handleError(error) {
-    if (error.message === "Failed to fetch") {
-      alert(error.message);
-    }
-    console.log(error);
   }
   return {
     getGeocoding,
@@ -1425,8 +1435,8 @@ module.exports = __webpack_require__.p + "img/d554b2b13d48a709d41b.svg";
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ __webpack_require__.O(0, [216], () => (__webpack_exec__(312)));
+/******/ __webpack_require__.O(0, [216], () => (__webpack_exec__(73)));
 /******/ var __webpack_exports__ = __webpack_require__.O();
 /******/ }
 ]);
-//# sourceMappingURL=index.989810417d82b7d15141.js.map
+//# sourceMappingURL=index.3e23f98028ca15f89cdc.js.map
