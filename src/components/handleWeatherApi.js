@@ -1,5 +1,7 @@
 "use strict";
 
+import { handleError } from "./handleError";
+
 import L from "leaflet/dist/leaflet";
 
 const weatherApi = (() => {
@@ -54,7 +56,7 @@ const weatherApi = (() => {
 
             return response.json();
         } catch (error) {
-            handleError(error);
+            handleError.api(error);
         }
     }
 
